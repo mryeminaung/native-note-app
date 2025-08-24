@@ -1,14 +1,13 @@
 import { Stack } from "expo-router";
-import "react-native-reanimated";
+import React from "react";
 
-export default function RootLayout() {
+export default function SettingLayout() {
 	return (
 		<Stack>
 			<Stack.Screen
-				name="(tabs)"
+				name="settings"
 				options={{ headerShown: false }}
 			/>
-			<Stack.Screen name="+not-found" />
 		</Stack>
 	);
 }

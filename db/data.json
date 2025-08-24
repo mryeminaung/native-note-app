@@ -1,0 +1,58 @@
+[
+	{
+		"id": 1,
+		"title": "Meeting Notes",
+		"body": "Discuss project roadmap and milestones.",
+		"bgColor": "#FFF9C4",
+		"starred": false
+	},
+	{
+		"id": 2,
+		"title": "Shopping List",
+		"body": "Milk, Eggs, Bread, Butter",
+		"bgColor": "#FFE0B2",
+		"starred": false
+	},
+	{
+		"id": 3,
+		"title": "Exam Reminder",
+		"body": "Math exam on Friday, 9 AM sharp!",
+		"bgColor": "#BBDEFB",
+		"starred": false
+	},
+	{
+		"id": 4,
+		"title": "Workout Plan",
+		"body": "Cardio + Strength training (1 hour)",
+		"bgColor": "#C8E6C9",
+		"starred": true
+	},
+	{
+		"id": 5,
+		"title": "Ideas",
+		"body": "Try implementing cloud sync with Firebase.",
+		"bgColor": "#F8BBD0",
+		"starred": false
+	},
+	{
+		"id": 6,
+		"title": "Quote",
+		"body": "“Stay hungry, stay foolish.”",
+		"bgColor": "#E1BEE7",
+		"starred": false
+	},
+	{
+		"id": 7,
+		"title": "Reading List",
+		"body": "Clean Code, You Don't Know JS, Flutter Docs",
+		"bgColor": "#FFF9C4",
+		"starred": true
+	},
+	{
+		"id": 8,
+		"title": "Default Note",
+		"body": "This is a gray sticky note by default.",
+		"bgColor": "#E0E0E0",
+		"starred": false
+	}
+]
