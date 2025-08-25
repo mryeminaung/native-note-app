@@ -1,3 +1,4 @@
+import { COLORS } from "@/constants/Colors";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Tabs } from "expo-router";
@@ -8,6 +9,7 @@ export default function TabLayout() {
 		<Tabs
 			screenOptions={{
 				headerShown: false,
+				tabBarActiveTintColor: COLORS.DEEP_BLUE,
 			}}>
 			<Tabs.Screen
 				name="(notes)"

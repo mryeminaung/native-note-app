@@ -1,4 +1,5 @@
 import NoteCard from "@/components/NoteCard";
+import { COLORS } from "@/constants/Colors";
 import data from "@/db/data.json";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -64,7 +65,7 @@ export default function Notes() {
 						<AntDesign
 							name="pluscircleo"
 							size={45}
-							color="black"
+							color={COLORS.DEEP_BLUE}
 						/>
 					</TouchableOpacity>
 				</View>
@@ -89,7 +90,7 @@ export default function Notes() {
 							<MaterialIcons
 								name="sticky-note-2"
 								size={24}
-								color={activeTab === "all" ? "blue" : ""}
+								color={activeTab === "all" ? COLORS.DEEP_BLUE : ""}
 							/>
 							<Text
 								style={[
@@ -113,7 +114,7 @@ export default function Notes() {
 							<MaterialIcons
 								name={activeTab === "starred" ? "star" : "star-outline"}
 								size={24}
-								color={activeTab === "starred" ? "blue" : ""}
+								color={activeTab === "starred" ? COLORS.DEEP_BLUE : ""}
 							/>
 							<Text
 								style={[
@@ -182,7 +183,7 @@ const styles = StyleSheet.create({
 	},
 	activeTab: {
 		borderBottomWidth: 3,
-		borderBottomColor: "#000dffff",
+		borderBottomColor: COLORS.DEEP_BLUE,
 	},
 	tabText: {
 		fontSize: 17,
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
 		color: "#555",
 	},
 	activeTabText: {
-		color: "#000dffff",
+		color: COLORS.DEEP_BLUE,
 		fontWeight: "bold",
 	},
 	content: {

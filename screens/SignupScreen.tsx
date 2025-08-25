@@ -1,0 +1,229 @@
+import { COLORS } from "@/constants/Colors";
+import { Link, useRouter } from "expo-router";
+import React from "react";
+import {
+	Image,
+	Pressable,
+	StyleSheet,
+	Text,
+	TextInput,
+	View,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+import { Feather, MaterialIcons } from "@expo/vector-icons";
+
+export default function SignupScreen() {
+	const router = useRouter();
+
+	return (
+		<SafeAreaView style={styles.safeArea}>
+			<View
+				style={{ flex: 0.2, justifyContent: "center", alignItems: "center" }}>
+				<Image
+					source={require("@/assets/images/note_logo.png")}
+					style={styles.noteLogo}
+					resizeMode="contain"
+				/>
+			</View>
+			<View style={[styles.card, { display: "flex" }]}>
+				<Text style={styles.title}>Create Your Account</Text>
+				<Text style={styles.subTitle}>Create your account to get started</Text>
+
+				{/* Full Name */}
+				<View style={styles.inputWrapper}>
+					<Feather
+						name="user"
+						size={22}
+						color={COLORS.DEEP_BLUE}
+						style={styles.inputIcon}
+					/>
+					<TextInput
+						style={styles.input}
+						placeholder="Enter full name"
+					/>
+				</View>
+
+				{/* Email */}
+				<View style={styles.inputWrapper}>
+					<MaterialIcons
+						name="email"
+						size={22}
+						color={COLORS.DEEP_BLUE}
+						style={styles.inputIcon}
+					/>
+					<TextInput
+						style={styles.input}
+						placeholder="Enter email"
+						keyboardType="email-address"
+					/>
+				</View>
+
+				{/* Password */}
+				<View style={styles.inputWrapper}>
+					<Feather
+						name="lock"
+						size={22}
+						color={COLORS.DEEP_BLUE}
+						style={styles.inputIcon}
+					/>
+					<TextInput
+						style={styles.input}
+						secureTextEntry={true}
+						placeholder="Enter password"
+						autoCapitalize="none"
+						autoCorrect={false}
+						textContentType="password"
+					/>
+				</View>
+
+				{/* Confirm Password */}
+				<View style={styles.inputWrapper}>
+					<Feather
+						name="lock"
+						size={22}
+						color={COLORS.DEEP_BLUE}
+						style={styles.inputIcon}
+					/>
+					<TextInput
+						style={styles.input}
+						secureTextEntry={true}
+						placeholder="Confirm password"
+						autoCapitalize="none"
+						autoCorrect={false}
+						textContentType="password"
+					/>
+				</View>
+
+				<Pressable
+					style={[styles.btn, { backgroundColor: COLORS.DEEP_BLUE }]}
+					onPress={() => router.push("/notes")}>
+					<Text style={{ color: "white", fontSize: 16 }}>Sign Up</Text>
+				</Pressable>
+
+				<View style={styles.wrapper}>
+					<View style={styles.line} />
+					<Text style={{ fontSize: 14, marginHorizontal: 10, color: "#888" }}>
+						Sign Up With
+					</Text>
+					<View style={styles.line} />
+				</View>
+
+				{/* Social SignUp */}
+				<View style={styles.logoContainer}>
+					<View style={styles.logoWrapper}>
+						<Image
+							source={require("@/assets/images/facebook_logo.png")}
+							style={styles.logo}
+						/>
+					</View>
+					<View style={styles.logoWrapper}>
+						<Image
+							source={require("@/assets/images/google_logo.png")}
+							style={styles.logo}
+						/>
+					</View>
+					<View style={styles.logoWrapper}>
+						<Image
+							source={require("@/assets/images/twitter_logo.png")}
+							style={styles.logo}
+						/>
+					</View>
+				</View>
+
+				<Link
+					href={{ pathname: "/login" }}
+					style={{ textAlign: "center", marginBottom: 15 }}>
+					<Text>Already have an account? LogIn</Text>
+				</Link>
+			</View>
+		</SafeAreaView>
+	);
+}
+
+const styles = StyleSheet.create({
+	noteLogo: {
+		height: "100%",
+		width: "100%",
+	},
+	safeArea: {
+		flex: 1,
+		backgroundColor: "white",
+	},
+	title: {
+		fontSize: 28,
+		textAlign: "center",
+	},
+	subTitle: {
+		fontSize: 15,
+		textAlign: "center",
+		marginTop: 5,
+		marginBottom: 25,
+	},
+	line: {
+		flex: 1,
+		height: 1,
+		backgroundColor: "#ccc",
+		marginRight: 10,
+	},
+	wrapper: {
+		flexDirection: "row",
+		alignItems: "center",
+		marginVertical: 15,
+	},
+	card: {
+		position: "absolute",
+		padding: 35,
+		bottom: -5,
+		right: 0,
+		left: 0,
+		borderWidth: 0.3,
+		borderTopLeftRadius: 40,
+		borderTopRightRadius: 40,
+		backgroundColor: "white",
+	},
+	inputWrapper: {
+		flexDirection: "row",
+		alignItems: "center",
+		borderWidth: 0.3,
+		borderRadius: 15,
+		marginBottom: 20,
+		paddingHorizontal: 10,
+	},
+	inputIcon: {
+		marginRight: 10,
+	},
+	input: {
+		flex: 1,
+		paddingVertical: 15,
+	},
+	btn: {
+		borderWidth: 0.5,
+		paddingVertical: 15,
+		marginBottom: 15,
+		alignItems: "center",
+		borderRadius: 30,
+		width: "100%",
+	},
+	logoContainer: {
+		flexDirection: "row",
+		justifyContent: "center",
+		columnGap: 30,
+		marginBottom: 20,
+	},
+	logoWrapper: {
+		backgroundColor: "#fff",
+		padding: 5,
+		borderRadius: 10,
+		elevation: 2,
+		shadowColor: "#000",
+		shadowOffset: { width: 0, height: 2 },
+		shadowOpacity: 0.2,
+		shadowRadius: 4,
+	},
+	logo: {
+		width: 40,
+		height: 40,
+		resizeMode: "contain",
+	},
+});

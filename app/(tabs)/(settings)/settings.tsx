@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import React from "react";
 import {
 	Image,
@@ -16,6 +17,8 @@ const SettingsDashboard = () => {
 	const [supportServiceEnabled, setSupportServiceEnabled] =
 		React.useState(false);
 	const [privacyPolicyEnabled, setPrivacyPolicyEnabled] = React.useState(false);
+
+	const router = useRouter();
 
 	return (
 		<SafeAreaView>
@@ -81,7 +84,9 @@ const SettingsDashboard = () => {
 				</View>
 
 				{/* Sign Out Button */}
-				<TouchableOpacity style={styles.signOutButton}>
+				<TouchableOpacity
+					onPress={() => router.push("(auth)")}
+					style={styles.signOutButton}>
 					<Text style={styles.signOutText}>Sign Out</Text>
 				</TouchableOpacity>
 			</ScrollView>
