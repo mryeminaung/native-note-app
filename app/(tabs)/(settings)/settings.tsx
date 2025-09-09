@@ -1,144 +1,214 @@
+import { COLORS } from "@/constants/Colors";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React from "react";
 import {
 	Image,
+	Pressable,
 	ScrollView,
 	StyleSheet,
-	Switch,
 	Text,
-	TouchableOpacity,
 	View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SettingsDashboard = () => {
-	const [notificationsEnabled, setNotificationsEnabled] = React.useState(false);
-	const [settingsEnabled, setSettingsEnabled] = React.useState(true);
-	const [supportServiceEnabled, setSupportServiceEnabled] =
-		React.useState(false);
-	const [privacyPolicyEnabled, setPrivacyPolicyEnabled] = React.useState(false);
-
 	const router = useRouter();
 
 	return (
-		<SafeAreaView>
-			<ScrollView contentContainerStyle={styles.scrollContent}>
-				{/* Profile Section */}
+		<SafeAreaView style={{ flex: 1 }}>
+			<ScrollView>
+				<View style={styles.settingBanner} />
 				<View style={styles.profileSection}>
 					<Image
 						source={{ uri: "https://placeholder.com/avatar" }}
 						style={styles.avatar}
 					/>
 					<Text style={styles.name}>Ye Min Aung</Text>
-					<Text style={styles.title}>React Native Developer</Text>
-
+					<Text style={styles.title}>yeminaung.dev@gmail.com</Text>
+				</View>
+				<View style={styles.settingsSection}>
+					<Text style={{ fontWeight: "bold", fontSize: 17, marginBottom: 15 }}>
+						Notes Summary
+					</Text>
 					<View style={styles.statsContainer}>
 						<View style={styles.statItem}>
-							<Text style={styles.statNumber}>10</Text>
 							<Text style={styles.statLabel}>Notes</Text>
+							<Text style={styles.statNumber}>10</Text>
 						</View>
 						<View style={styles.statItem}>
-							<Text style={styles.statNumber}>7</Text>
-							<Text style={styles.statLabel}>Followers</Text>
-						</View>
-						<View style={styles.statItem}>
+							<Text style={styles.statLabel}>Starred</Text>
 							<Text style={styles.statNumber}>3</Text>
-							<Text style={styles.statLabel}>Following</Text>
 						</View>
 					</View>
+
+					<Text style={{ fontWeight: "bold", fontSize: 17 }}>Settings</Text>
+
+					<View style={styles.optionItem}>
+						<View
+							style={{
+								flexDirection: "row",
+								alignItems: "center",
+								columnGap: 10,
+							}}>
+							<MaterialIcons
+								name="person"
+								style={{
+									backgroundColor: COLORS.DEEP_BLUE,
+									padding: 3,
+									borderRadius: 5,
+								}}
+								color={COLORS.LIGHT_SKY_BLUE}
+								size={30}
+							/>
+							<Text style={styles.optionText}>Change Username</Text>
+						</View>
+						<MaterialIcons
+							name="chevron-right"
+							color={COLORS.DEEP_BLUE}
+							size={30}
+						/>
+					</View>
+
+					<View style={styles.optionItem}>
+						<View
+							style={{
+								flexDirection: "row",
+								alignItems: "center",
+								columnGap: 10,
+							}}>
+							<MaterialIcons
+								name="lock"
+								style={{
+									backgroundColor: COLORS.DEEP_BLUE,
+									padding: 3,
+									borderRadius: 5,
+								}}
+								color={COLORS.LIGHT_SKY_BLUE}
+								size={30}
+							/>
+							<Text style={styles.optionText}>Change Password</Text>
+						</View>
+						<MaterialIcons
+							name="chevron-right"
+							size={30}
+						/>
+					</View>
+
+					<View style={styles.optionItem}>
+						<View
+							style={{
+								flexDirection: "row",
+								alignItems: "center",
+								columnGap: 10,
+							}}>
+							<MaterialIcons
+								name="palette"
+								style={{
+									backgroundColor: COLORS.DEEP_BLUE,
+									padding: 3,
+									borderRadius: 5,
+								}}
+								color={COLORS.LIGHT_SKY_BLUE}
+								size={30}
+							/>
+							<Text style={styles.optionText}>Theme Preference</Text>
+						</View>
+						<MaterialIcons
+							name="chevron-right"
+							size={30}
+						/>
+					</View>
 				</View>
 
-				{/* Settings Options */}
-				<View style={styles.settingsSection}>
-					<View style={styles.optionItem}>
-						<Text style={styles.optionText}>Notification</Text>
-						<Switch
-							value={notificationsEnabled}
-							onValueChange={setNotificationsEnabled}
-						/>
-					</View>
-
-					<View style={styles.optionItem}>
-						<Text style={styles.optionText}>Setting</Text>
-						<Switch
-							value={settingsEnabled}
-							onValueChange={setSettingsEnabled}
-						/>
-					</View>
-
-					<View style={styles.optionItem}>
-						<Text style={styles.optionText}>Support Service</Text>
-						<Switch
-							value={supportServiceEnabled}
-							onValueChange={setSupportServiceEnabled}
-						/>
-					</View>
-
-					<View style={styles.optionItem}>
-						<Text style={styles.optionText}>Privacy Policy</Text>
-						<Switch
-							value={privacyPolicyEnabled}
-							onValueChange={setPrivacyPolicyEnabled}
-						/>
-					</View>
-				</View>
-
-				{/* Sign Out Button */}
-				<TouchableOpacity
-					onPress={() => router.push("(auth)")}
-					style={styles.signOutButton}>
-					<Text style={styles.signOutText}>Sign Out</Text>
-				</TouchableOpacity>
+				<Pressable
+					style={[styles.btn, { backgroundColor: COLORS.DEEP_BLUE }]}
+					onPress={() => router.push("/signup")}>
+					<Text style={{ color: "white" }}>LogOut</Text>
+					<MaterialIcons
+						style={{ marginLeft: 10, color: "white" }}
+						name="logout"
+						size={20}
+					/>
+				</Pressable>
 			</ScrollView>
 		</SafeAreaView>
 	);
 };
 
 const styles = StyleSheet.create({
-	scrollContent: {
-		padding: 20,
-	},
 	profileSection: {
 		alignItems: "center",
-		marginBottom: 30,
+		marginTop: -220,
+	},
+	btn: {
+		paddingVertical: 15,
+		marginHorizontal: 20,
+		marginBottom: 15,
+		flexDirection: "row",
+		justifyContent: "center",
+		alignItems: "center",
+		borderRadius: 30,
+		color: "white",
+	},
+	settingBanner: {
+		height: 280,
+		borderBottomLeftRadius: 20,
+		borderBottomRightRadius: 20,
+		backgroundColor: COLORS.DEEP_BLUE,
 	},
 	avatar: {
 		width: 100,
 		height: 100,
 		borderRadius: 50,
 		marginBottom: 15,
-		backgroundColor: "#ddd", // Placeholder color
+		backgroundColor: "#ddd",
 	},
 	name: {
 		fontSize: 24,
 		fontWeight: "bold",
+		color: "white",
 		marginBottom: 5,
 	},
 	title: {
 		fontSize: 16,
-		color: "#666",
+		color: "white",
 		marginBottom: 20,
 	},
 	statsContainer: {
 		flexDirection: "row",
+		columnGap: 30,
 		justifyContent: "space-around",
-		width: "80%",
 	},
 	statItem: {
 		alignItems: "center",
+		borderRadius: 10,
+		paddingVertical: 15,
+		flex: 1,
+		backgroundColor: "white",
+		padding: 15,
+		marginBottom: 20,
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 2,
+		},
+		elevation: 3,
 	},
 	statNumber: {
-		fontSize: 18,
+		fontSize: 16,
 		fontWeight: "bold",
 	},
 	statLabel: {
-		fontSize: 14,
+		fontSize: 17,
 		color: "#666",
+		fontWeight: "bold",
 	},
 	settingsSection: {
+		marginHorizontal: 20,
 		backgroundColor: "white",
 		borderRadius: 10,
-		padding: 15,
+		padding: 20,
 		marginBottom: 20,
 		shadowColor: "#000",
 		shadowOffset: {

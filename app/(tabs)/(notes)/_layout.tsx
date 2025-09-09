@@ -18,6 +18,13 @@ export default function NotesLayout() {
 				}}
 			/>
 			<Stack.Screen
+				name="edit"
+				options={{
+					headerTitle: "Back",
+					headerShown: true,
+				}}
+			/>
+			<Stack.Screen
 				name="[noteId]"
 				options={{
 					headerTitle: "Notes",

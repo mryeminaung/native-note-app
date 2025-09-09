@@ -1,13 +1,13 @@
 import NoteCard from "@/components/NoteCard";
 import { COLORS } from "@/constants/Colors";
 import data from "@/db/data.json";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
 	FlatList,
+	Pressable,
 	StyleSheet,
 	Text,
 	TextInput,
@@ -48,26 +48,29 @@ export default function Notes() {
 
 	return (
 		<SafeAreaView style={styles.safeArea}>
+			<Pressable
+				style={styles.addFab}
+				onPress={() => router.push("./create")}>
+				<AntDesign
+					name="plus"
+					size={28}
+					style={{ textAlign: "center" }}
+					color={COLORS.DEEP_BLUE}
+				/>
+			</Pressable>
+
 			<View style={styles.container}>
-				<View
-					style={{
-						flexDirection: "row",
-						justifyContent: "space-between",
-						alignItems: "center",
-					}}>
+				<View style={styles.header}>
 					<View style={{ rowGap: 7 }}>
 						<Text style={styles.headerText}>My Notes</Text>
 						<Text style={styles.subHeaderText}>
 							Your daily notes that remind you
 						</Text>
 					</View>
-					<TouchableOpacity onPress={() => router.push("./create")}>
-						<AntDesign
-							name="pluscircleo"
-							size={45}
-							color={COLORS.DEEP_BLUE}
-						/>
-					</TouchableOpacity>
+					<MaterialIcons
+						name="sort"
+						size={45}
+					/>
 				</View>
 
 				<TextInput
@@ -77,21 +80,17 @@ export default function Notes() {
 					onChangeText={setSearchQuery}
 				/>
 
+				{/* Tabs */}
 				<View style={styles.tabs}>
 					<TouchableOpacity
 						style={[styles.tab, activeTab === "all" && styles.activeTab]}
 						onPress={() => setActiveTab("all")}>
-						<View
-							style={{
-								flexDirection: "row",
-								columnGap: 10,
-								alignItems: "center",
-							}}>
-							<MaterialIcons
+						<View style={styles.tabInner}>
+							{/* <MaterialIcons
 								name="sticky-note-2"
-								size={24}
-								color={activeTab === "all" ? COLORS.DEEP_BLUE : ""}
-							/>
+								size={20}
+								color={activeTab === "all" ? COLORS.DEEP_BLUE : "#555"}
+							/> */}
 							<Text
 								style={[
 									styles.tabText,
@@ -105,17 +104,12 @@ export default function Notes() {
 					<TouchableOpacity
 						style={[styles.tab, activeTab === "starred" && styles.activeTab]}
 						onPress={() => setActiveTab("starred")}>
-						<View
-							style={{
-								flexDirection: "row",
-								columnGap: 10,
-								alignItems: "center",
-							}}>
-							<MaterialIcons
+						<View style={styles.tabInner}>
+							{/* <MaterialIcons
 								name={activeTab === "starred" ? "star" : "star-outline"}
-								size={24}
-								color={activeTab === "starred" ? COLORS.DEEP_BLUE : ""}
-							/>
+								size={20}
+								color={activeTab === "starred" ? COLORS.DEEP_BLUE : "#555"}
+							/> */}
 							<Text
 								style={[
 									styles.tabText,
@@ -127,20 +121,22 @@ export default function Notes() {
 					</TouchableOpacity>
 				</View>
 
-				<View style={styles.content}>
-					<FlatList
-						data={filteredNotes}
-						keyExtractor={(item) => item.id.toString()}
-						showsVerticalScrollIndicator={false}
-						contentContainerStyle={{ paddingBottom: 50 }}
-						renderItem={({ item }) => (
-							<NoteCard
-								note={item}
-								markedAsStar={markedAsStar}
-							/>
-						)}
-					/>
-				</View>
+				{/* Notes List */}
+				<FlatList
+					data={filteredNotes}
+					keyExtractor={(item) => item.id.toString()}
+					showsVerticalScrollIndicator={false}
+					contentContainerStyle={styles.listContent}
+					ListEmptyComponent={
+						<Text style={styles.emptyText}>No notes found</Text>
+					}
+					renderItem={({ item }) => (
+						<NoteCard
+							note={item}
+							markedAsStar={markedAsStar}
+						/>
+					)}
+				/>
 			</View>
 		</SafeAreaView>
 	);
@@ -151,12 +147,36 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: "white",
 	},
+	addFab: {
+		position: "absolute",
+		bottom: 50,
+		right: 30,
+		zIndex: 999,
+		height: 70,
+		width: 70,
+		alignContent: "center",
+		justifyContent: "center",
+		backgroundColor: "white",
+		borderRadius: 50,
+		padding: 15,
+		shadowColor: "#000",
+		shadowOpacity: 0.15,
+		shadowOffset: { width: 0, height: 2 },
+		shadowRadius: 4,
+		elevation: 2,
+	},
 	container: {
 		flex: 1,
 		paddingHorizontal: 20,
 	},
+	header: {
+		marginBottom: 10,
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
+	},
 	headerText: {
-		fontSize: 28,
+		fontSize: 25,
 		fontWeight: "bold",
 	},
 	subHeaderText: {
@@ -164,10 +184,11 @@ const styles = StyleSheet.create({
 		color: "#555",
 	},
 	searchInput: {
-		marginVertical: 20,
-		padding: 18,
+		padding: 15,
+		paddingLeft: 20,
+		marginVertical: 5,
 		borderWidth: 0.5,
-		borderColor: "#ccc",
+		borderColor: COLORS.DEEP_BLUE,
 		borderRadius: 50,
 		backgroundColor: "white",
 	},
@@ -175,10 +196,16 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		borderBottomWidth: 1,
 		borderBottomColor: "#ccc",
+		marginBottom: 10,
 	},
 	tab: {
 		flex: 1,
 		paddingVertical: 10,
+		alignItems: "center",
+	},
+	tabInner: {
+		flexDirection: "row",
+		columnGap: 10,
 		alignItems: "center",
 	},
 	activeTab: {
@@ -186,7 +213,7 @@ const styles = StyleSheet.create({
 		borderBottomColor: COLORS.DEEP_BLUE,
 	},
 	tabText: {
-		fontSize: 17,
+		fontSize: 15,
 		fontWeight: "500",
 		color: "#555",
 	},
@@ -194,9 +221,14 @@ const styles = StyleSheet.create({
 		color: COLORS.DEEP_BLUE,
 		fontWeight: "bold",
 	},
-	content: {
-		flex: 1,
+	listContent: {
 		paddingTop: 20,
-		marginBottom: -23,
+		paddingBottom: -50,
+	},
+	emptyText: {
+		textAlign: "center",
+		marginTop: 40,
+		fontSize: 16,
+		color: "#777",
 	},
 });

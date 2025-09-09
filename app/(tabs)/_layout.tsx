@@ -14,11 +14,11 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="(notes)"
 				options={{
-					title: "Home",
+					title: "Notes",
 					headerShown: false,
 					tabBarIcon: ({ color }) => (
 						<MaterialIcons
-							name="home"
+							name="sticky-note-2"
 							size={24}
 							color={color}
 						/>

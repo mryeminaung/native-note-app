@@ -1,5 +1,5 @@
 import { COLORS, STICKY_COLORS } from "@/constants/Colors";
-import { AntDesign } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -11,7 +11,7 @@ import {
 	View,
 } from "react-native";
 
-type NewNoteProps = {
+type EditNoteProps = {
 	id?: number;
 	title: string;
 	body: string;
@@ -19,8 +19,8 @@ type NewNoteProps = {
 	starred: false;
 };
 
-export default function NewNote() {
-	const [newNote, setNewNote] = useState<NewNoteProps | null>({
+export default function EditNote() {
+	const [newNote, setNewNote] = useState<EditNoteProps | null>({
 		title: "",
 		body: "",
 		bgColor: "",
@@ -39,8 +39,8 @@ export default function NewNote() {
 			<Pressable
 				style={styles.saveFab}
 				onPress={() => router.push("./notes")}>
-				<AntDesign
-					name="save"
+				<MaterialIcons
+					name="save-as"
 					style={{ textAlign: "center" }}
 					size={30}
 					color={COLORS.DEEP_BLUE}

@@ -7,6 +7,21 @@ const Colors = {
   sticky_lavender: '#E1BEE7',
 };
 
+export const STICKY_COLORS = [
+  "#FFF9C4", // sticky_yellow - Soft pastel yellow
+  "#BBDEFB", // sticky_blue - Light pastel blue
+  "#C8E6C9", // sticky_green - Soft mint green
+  "#FFE0B2", // sticky_orange - Warm pastel orange
+  "#F8BBD0", // sticky_pink - Baby pink / pastel rose
+  "#E1BEE7", // sticky_lavender - Soft lavender purple
+  "#FFCCBC", // sticky_peach - Gentle peach / coral tint
+  "#B2DFDB", // sticky_mint - Aqua mint green
+  "#CFD8DC", // sticky_gray - Neutral soft gray
+  "#B3E5FC", // sticky_sky - Light sky blue
+  "#F0F4C3", // sticky_lime - Pastel lime
+];
+
+
 export default Colors;
 
 export const COLORS = {

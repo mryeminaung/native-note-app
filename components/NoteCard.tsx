@@ -1,3 +1,4 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link } from "expo-router";
 import React from "react";
@@ -35,14 +36,14 @@ export default function NoteCard({ note, markedAsStar }: NoteCardProps) {
 					{note.starred ? (
 						<FontAwesome
 							name="star"
-							size={24}
+							size={20}
 							color="red"
 							onPress={() => markedAsStar(note.id)}
 						/>
 					) : (
 						<FontAwesome
 							name="star-o"
-							size={24}
+							size={20}
 							color="black"
 							onPress={() => markedAsStar(note.id)}
 						/>
@@ -57,22 +58,28 @@ export default function NoteCard({ note, markedAsStar }: NoteCardProps) {
 					justifyContent: "space-between",
 					alignItems: "center",
 				}}>
-				<View style={{ flexDirection: "row", columnGap: 10 }}>
+				<View
+					style={{ flexDirection: "row", alignItems: "center", columnGap: 10 }}>
 					<FontAwesome
 						name="calendar-check-o"
-						size={20}
+						size={18}
 					/>
-					<Text style={{ fontSize: 17 }}>21-8-2025</Text>
+					<Text style={{ fontSize: 14 }}>21-8-2025</Text>
 				</View>
 				<View
-					style={{ flexDirection: "row", columnGap: 15, alignItems: "center" }}>
-					<FontAwesome
-						name="edit"
-						size={20}
+					style={{
+						flexDirection: "row",
+						columnGap: 15,
+						justifyContent: "center",
+						alignItems: "center",
+					}}>
+					<MaterialIcons
+						name="error"
+						size={18}
 					/>
 					<FontAwesome
 						name="trash"
-						size={20}
+						size={18}
 					/>
 				</View>
 			</View>
@@ -82,18 +89,17 @@ export default function NoteCard({ note, markedAsStar }: NoteCardProps) {
 
 const styles = StyleSheet.create({
 	noteCard: {
-		borderRadius: 18,
+		borderRadius: 12,
 		padding: 20,
 		width: width - 40,
 		marginBottom: 18,
-		borderWidth: 0.1,
-		elevation: 2,
-		alignSelf: "center",
 	},
 	noteTitle: {
-		fontSize: 19,
+		fontSize: 17,
+		fontWeight: "500",
 	},
 	noteBody: {
 		fontSize: 14,
+		marginVertical: 3,
 	},
 });
