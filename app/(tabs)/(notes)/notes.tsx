@@ -2,9 +2,8 @@ import NoteCard from "@/components/NoteCard";
 import { COLORS } from "@/constants/Colors";
 import data from "@/db/data.json";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useMemo, useState } from "react"; // 👈 Import useMemo
 import {
 	FlatList,
 	Pressable,
@@ -22,11 +21,12 @@ type NotesProps = {
 	body: string;
 	bgColor: string;
 	starred: boolean;
+	priority: string;
+	createdAt: string;
 };
 
 export default function Notes() {
 	const [notes, setNotes] = useState<NotesProps[]>(data);
-	const navigation = useNavigation();
 	const router = useRouter();
 
 	const [activeTab, setActiveTab] = useState<"all" | "starred">("all");
@@ -40,11 +40,14 @@ export default function Notes() {
 		);
 	};
 
-	const filteredNotes = notes
-		.filter((note) => (activeTab === "all" ? true : note.starred))
-		.filter((note) =>
-			note.title.toLowerCase().includes(searchQuery.toLowerCase()),
-		);
+	// ✅ Optimized with useMemo
+	const filteredNotes = useMemo(() => {
+		return notes
+			.filter((note) => (activeTab === "all" ? true : note.starred))
+			.filter((note) =>
+				note.title.toLowerCase().includes(searchQuery.toLowerCase()),
+			);
+	}, [notes, activeTab, searchQuery]);
 
 	return (
 		<SafeAreaView style={styles.safeArea}>
@@ -53,7 +56,7 @@ export default function Notes() {
 				onPress={() => router.push("./create")}>
 				<AntDesign
 					name="plus"
-					size={28}
+					size={25}
 					style={{ textAlign: "center" }}
 					color={COLORS.DEEP_BLUE}
 				/>
@@ -86,11 +89,6 @@ export default function Notes() {
 						style={[styles.tab, activeTab === "all" && styles.activeTab]}
 						onPress={() => setActiveTab("all")}>
 						<View style={styles.tabInner}>
-							{/* <MaterialIcons
-								name="sticky-note-2"
-								size={20}
-								color={activeTab === "all" ? COLORS.DEEP_BLUE : "#555"}
-							/> */}
 							<Text
 								style={[
 									styles.tabText,
@@ -100,16 +98,10 @@ export default function Notes() {
 							</Text>
 						</View>
 					</TouchableOpacity>
-
 					<TouchableOpacity
 						style={[styles.tab, activeTab === "starred" && styles.activeTab]}
 						onPress={() => setActiveTab("starred")}>
 						<View style={styles.tabInner}>
-							{/* <MaterialIcons
-								name={activeTab === "starred" ? "star" : "star-outline"}
-								size={20}
-								color={activeTab === "starred" ? COLORS.DEEP_BLUE : "#555"}
-							/> */}
 							<Text
 								style={[
 									styles.tabText,
@@ -125,6 +117,7 @@ export default function Notes() {
 				<FlatList
 					data={filteredNotes}
 					keyExtractor={(item) => item.id.toString()}
+					ItemSeparatorComponent={() => <View style={{ marginVertical: 8 }} />}
 					showsVerticalScrollIndicator={false}
 					contentContainerStyle={styles.listContent}
 					ListEmptyComponent={
@@ -152,8 +145,8 @@ const styles = StyleSheet.create({
 		bottom: 50,
 		right: 30,
 		zIndex: 999,
-		height: 70,
-		width: 70,
+		height: 60,
+		width: 60,
 		alignContent: "center",
 		justifyContent: "center",
 		backgroundColor: "white",
@@ -222,8 +215,8 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 	},
 	listContent: {
-		paddingTop: 20,
-		paddingBottom: -50,
+		// paddingTop: 20,
+		// paddingBottom: 50,
 	},
 	emptyText: {
 		textAlign: "center",

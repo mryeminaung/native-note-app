@@ -10,13 +10,12 @@ import {
 	Text,
 	View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const SettingsDashboard = () => {
 	const router = useRouter();
 
 	return (
-		<SafeAreaView style={{ flex: 1 }}>
+		<View style={{ flex: 1 }}>
 			<ScrollView>
 				<View style={styles.settingBanner} />
 				<View style={styles.profileSection}>
@@ -132,7 +131,7 @@ const SettingsDashboard = () => {
 					/>
 				</Pressable>
 			</ScrollView>
-		</SafeAreaView>
+		</View>
 	);
 };
 

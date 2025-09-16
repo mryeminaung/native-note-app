@@ -20,7 +20,7 @@ export default function NoteDetail() {
 				onPress={() => router.push("./edit")}>
 				<AntDesign
 					name="edit"
-					size={28}
+					size={25}
 					style={{ textAlign: "center" }}
 					color={COLORS.DEEP_BLUE}
 				/>
@@ -31,10 +31,8 @@ export default function NoteDetail() {
 					...styles.noteDetailContainer,
 					backgroundColor: currentNote?.bgColor,
 				}}>
-				<Text style={{ fontSize: 25, fontWeight: "bold" }}>
-					{currentNote?.title}
-				</Text>
-				<Text style={{ fontSize: 18 }}>{currentNote?.body}</Text>
+				<Text style={styles.noteTitle}>{currentNote?.title}</Text>
+				<Text style={styles.noteBody}>{currentNote?.body}</Text>
 			</View>
 		</SafeAreaView>
 	);
@@ -46,13 +44,22 @@ const styles = StyleSheet.create({
 		padding: 20,
 		rowGap: 10,
 	},
+	noteTitle: {
+		fontSize: 25,
+		lineHeight: 50,
+		fontWeight: "bold",
+	},
+	noteBody: {
+		lineHeight: 40,
+		fontSize: 18,
+	},
 	editFab: {
 		position: "absolute",
 		bottom: 50,
 		right: 30,
 		zIndex: 999,
-		height: 70,
-		width: 70,
+		height: 60,
+		width: 60,
 		alignContent: "center",
 		justifyContent: "center",
 		backgroundColor: "white",

@@ -27,6 +27,8 @@ export default function NewNote() {
 		starred: false,
 	});
 
+
+
 	const router = useRouter();
 
 	return (
@@ -42,11 +44,12 @@ export default function NewNote() {
 				<AntDesign
 					name="save"
 					style={{ textAlign: "center" }}
-					size={30}
+					size={25}
 					color={COLORS.DEEP_BLUE}
 				/>
 			</Pressable>
 			<View style={styles.cardContainer}>
+				
 				<ScrollView
 					horizontal
 					showsHorizontalScrollIndicator={false}
@@ -64,6 +67,7 @@ export default function NewNote() {
 					))}
 				</ScrollView>
 			</View>
+
 			<View style={styles.inputContainer}>
 				<TextInput
 					multiline
@@ -88,8 +92,8 @@ const styles = StyleSheet.create({
 		bottom: 50,
 		right: 30,
 		zIndex: 999,
-		height: 70,
-		width: 70,
+		height: 60,
+		width: 60,
 		padding: 15,
 		alignContent: "center",
 		justifyContent: "center",
