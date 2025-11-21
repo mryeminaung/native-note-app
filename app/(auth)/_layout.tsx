@@ -5,7 +5,7 @@ export default function _layout() {
 	return (
 		<Stack screenOptions={{}}>
 			<Stack.Screen
-				name="index"
+				name="welcome"
 				options={{ title: "Welcome", headerShown: false }}
 			/>
 			<Stack.Screen

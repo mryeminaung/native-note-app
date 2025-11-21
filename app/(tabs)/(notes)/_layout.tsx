@@ -14,21 +14,21 @@ export default function NotesLayout() {
 				name="create"
 				options={{
 					headerTitle: "Notes",
-					headerShown: true,
+					headerShown: false,
 				}}
 			/>
 			<Stack.Screen
 				name="edit"
 				options={{
 					headerTitle: "Back",
-					headerShown: true,
+					headerShown: false,
 				}}
 			/>
 			<Stack.Screen
 				name="[noteId]"
 				options={{
 					headerTitle: "Notes",
-					headerShown: true,
+					headerShown: false,
 				}}
 			/>
 		</Stack>

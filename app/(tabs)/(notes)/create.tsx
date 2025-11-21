@@ -5,11 +5,11 @@ import React, { useState } from "react";
 import {
 	Pressable,
 	ScrollView,
-	StyleSheet,
 	TextInput,
 	TouchableWithoutFeedback,
 	View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type NewNoteProps = {
 	id?: number;
@@ -26,110 +26,74 @@ export default function NewNote() {
 		bgColor: "",
 		starred: false,
 	});
-
-
-
 	const router = useRouter();
 
 	return (
-		<View
-			style={{
-				flex: 1,
-				flexDirection: "column",
-				backgroundColor: newNote?.bgColor ? newNote.bgColor : "white",
-			}}>
-			<Pressable
-				style={styles.saveFab}
-				onPress={() => router.push("./notes")}>
-				<AntDesign
-					name="save"
-					style={{ textAlign: "center" }}
-					size={25}
-					color={COLORS.DEEP_BLUE}
-				/>
-			</Pressable>
-			<View style={styles.cardContainer}>
-				
-				<ScrollView
-					horizontal
-					showsHorizontalScrollIndicator={false}
-					contentContainerStyle={styles.scrollContent}>
-					{STICKY_COLORS.map((color) => (
-						<TouchableWithoutFeedback
-							key={color}
-							onPress={() =>
-								setNewNote((preNote) =>
-									preNote ? { ...preNote, bgColor: color } : null,
-								)
-							}>
-							<View style={{ ...styles.colorCard, backgroundColor: color }} />
-						</TouchableWithoutFeedback>
-					))}
-				</ScrollView>
-			</View>
+		<SafeAreaView className="flex-1">
+			<View
+				className="flex-1 flex-col"
+				style={{
+					backgroundColor: newNote?.bgColor ? newNote.bgColor : "white",
+				}}>
+				{/* Save FAB */}
+				<Pressable
+					className="absolute bottom-[50px] right-[30px] z-50 h-[60px] w-[60px] items-center justify-center bg-white rounded-full p-4 shadow-sm shadow-black elevation-2"
+					onPress={() => router.push("./notes")}>
+					<AntDesign
+						name="save"
+						className="text-center"
+						size={25}
+						color={COLORS.DEEP_BLUE}
+					/>
+				</Pressable>
 
-			<View style={styles.inputContainer}>
-				<TextInput
-					multiline
-					style={{ ...styles.titleInput, backgroundColor: newNote?.bgColor }}
-					placeholder="Title"
-				/>
-				<TextInput
-					style={styles.bodyInput}
-					placeholder="Note something down"
-					multiline
-					// numberOfLines=true
-					textAlignVertical="top"
-				/>
+				{/* Color Picker Section */}
+				<View className="my-5 px-2.5 flex-row justify-evenly">
+					<ScrollView
+						horizontal
+						showsHorizontalScrollIndicator={false}
+						contentContainerStyle={{ paddingHorizontal: 10 }}>
+						{STICKY_COLORS.map((color) => (
+							<TouchableWithoutFeedback
+								key={color}
+								onPress={() =>
+									setNewNote((preNote) =>
+										preNote ? { ...preNote, bgColor: color } : null,
+									)
+								}>
+								<View
+									className="w-[50px] h-[50px] rounded-[10px] mr-2.5 border border-[#ccc]"
+									style={{ backgroundColor: color }}
+								/>
+							</TouchableWithoutFeedback>
+						))}
+					</ScrollView>
+				</View>
+
+				{/* Input Section */}
+				<View className="px-2.5">
+					<TextInput
+						multiline
+						className="rounded-full text-[23px]"
+						style={{ backgroundColor: newNote?.bgColor }}
+						placeholder="Title"
+						value={newNote?.title}
+						onChangeText={(text) =>
+							setNewNote((prev) => (prev ? { ...prev, title: text } : null))
+						}
+					/>
+					<TextInput
+						className="text-base"
+						placeholder="Note something down"
+						multiline
+						textAlignVertical="top"
+						value={newNote?.body}
+						onChangeText={(text) =>
+							setNewNote((prev) => (prev ? { ...prev, body: text } : null))
+						}
+					/>
+				</View>
 			</View>
-		</View>
+		</SafeAreaView>
 	);
 }
-
-const styles = StyleSheet.create({
-	saveFab: {
-		position: "absolute",
-		bottom: 50,
-		right: 30,
-		zIndex: 999,
-		height: 60,
-		width: 60,
-		padding: 15,
-		alignContent: "center",
-		justifyContent: "center",
-		backgroundColor: "white",
-		borderRadius: 50,
-		shadowColor: "#000",
-		shadowOpacity: 0.15,
-		shadowOffset: { width: 0, height: 2 },
-		shadowRadius: 4,
-		elevation: 2,
-	},
-	cardContainer: {
-		marginVertical: 20,
-		flexDirection: "row",
-		justifyContent: "space-evenly",
-	},
-	scrollContent: {
-		flexDirection: "row",
-		paddingHorizontal: 10,
-	},
-	colorCard: {
-		width: 50,
-		height: 50,
-		borderRadius: 10,
-		marginRight: 10,
-		borderWidth: 1,
-		borderColor: "#ccc",
-	},
-	inputContainer: {
-		paddingHorizontal: 10,
-	},
-	titleInput: {
-		borderRadius: 50,
-		fontSize: 23,
-	},
-	bodyInput: {
-		fontSize: 16,
-	},
-});

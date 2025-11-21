@@ -3,7 +3,8 @@ import notes from "@/db/data.json";
 import { AntDesign } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function NoteDetail() {
 	const { noteId } = useLocalSearchParams<{ noteId: string }>();
@@ -14,61 +15,30 @@ export default function NoteDetail() {
 	);
 
 	return (
-		<SafeAreaView style={{ flex: 1 }}>
+		<SafeAreaView className="flex-1">
+			{/* Edit FAB */}
 			<Pressable
-				style={styles.editFab}
+				className="absolute bottom-[50px] right-[30px] z-50 h-[60px] w-[60px] items-center justify-center bg-white rounded-full p-4 shadow-sm shadow-black elevation-2"
 				onPress={() => router.push("./edit")}>
 				<AntDesign
 					name="edit"
 					size={25}
-					style={{ textAlign: "center" }}
+					className="text-center"
 					color={COLORS.DEEP_BLUE}
 				/>
 			</Pressable>
 
+			{/* Note Content */}
 			<View
+				className="flex-1 p-5 gap-y-[10px]"
 				style={{
-					...styles.noteDetailContainer,
 					backgroundColor: currentNote?.bgColor,
 				}}>
-				<Text style={styles.noteTitle}>{currentNote?.title}</Text>
-				<Text style={styles.noteBody}>{currentNote?.body}</Text>
+				<Text className="text-[25px] leading-[50px] font-bold">
+					{currentNote?.title}
+				</Text>
+				<Text className="text-[18px] leading-[40px]">{currentNote?.body}</Text>
 			</View>
 		</SafeAreaView>
 	);
 }
-
-const styles = StyleSheet.create({
-	noteDetailContainer: {
-		flex: 1,
-		padding: 20,
-		rowGap: 10,
-	},
-	noteTitle: {
-		fontSize: 25,
-		lineHeight: 50,
-		fontWeight: "bold",
-	},
-	noteBody: {
-		lineHeight: 40,
-		fontSize: 18,
-	},
-	editFab: {
-		position: "absolute",
-		bottom: 50,
-		right: 30,
-		zIndex: 999,
-		height: 60,
-		width: 60,
-		alignContent: "center",
-		justifyContent: "center",
-		backgroundColor: "white",
-		borderRadius: 50,
-		padding: 15,
-		shadowColor: "#000",
-		shadowOpacity: 0.15,
-		shadowOffset: { width: 0, height: 2 },
-		shadowRadius: 4,
-		elevation: 2,
-	},
-});

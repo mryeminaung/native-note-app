@@ -3,16 +3,8 @@ import { COLORS } from "@/constants/Colors";
 import data from "@/db/data.json";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { useMemo, useState } from "react"; // 👈 Import useMemo
-import {
-	FlatList,
-	Pressable,
-	StyleSheet,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View,
-} from "react-native";
+import { useMemo, useState } from "react";
+import { FlatList, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 type NotesProps = {
@@ -40,7 +32,6 @@ export default function Notes() {
 		);
 	};
 
-	// ✅ Optimized with useMemo
 	const filteredNotes = useMemo(() => {
 		return notes
 			.filter((note) => (activeTab === "all" ? true : note.starred))
@@ -50,23 +41,25 @@ export default function Notes() {
 	}, [notes, activeTab, searchQuery]);
 
 	return (
-		<SafeAreaView style={styles.safeArea}>
+		<SafeAreaView className="flex-1 bg-white">
+			{/* Floating Action Button */}
 			<Pressable
-				style={styles.addFab}
+				className="absolute bottom-[50px] right-[30px] z-50 h-[60px] w-[60px] items-center justify-center bg-white rounded-full p-4 shadow-md shadow-black elevation-5"
 				onPress={() => router.push("./create")}>
 				<AntDesign
 					name="plus"
 					size={25}
-					style={{ textAlign: "center" }}
+					className="text-center"
 					color={COLORS.DEEP_BLUE}
 				/>
 			</Pressable>
 
-			<View style={styles.container}>
-				<View style={styles.header}>
-					<View style={{ rowGap: 7 }}>
-						<Text style={styles.headerText}>My Notes</Text>
-						<Text style={styles.subHeaderText}>
+			<View className="flex-1 px-5">
+				{/* Header */}
+				<View className="mb-2.5 flex-row items-center justify-between">
+					<View className="gap-y-[7px]">
+						<Text className="text-[25px] font-bold">My Notes</Text>
+						<Text className="text-base text-[#555]">
 							Your daily notes that remind you
 						</Text>
 					</View>
@@ -76,52 +69,77 @@ export default function Notes() {
 					/>
 				</View>
 
+				{/* Search Input */}
 				<TextInput
 					placeholder="Search Notes..."
-					style={styles.searchInput}
+					className="px-5 py-4 my-[3px] border-[0.5px] rounded-xl bg-white"
+					style={{ borderColor: COLORS.DEEP_BLUE }}
 					value={searchQuery}
 					onChangeText={setSearchQuery}
 				/>
 
 				{/* Tabs */}
-				<View style={styles.tabs}>
-					<TouchableOpacity
-						style={[styles.tab, activeTab === "all" && styles.activeTab]}
+				<View className="flex-row border-b border-[#ccc] mb-2.5">
+					<Pressable
+						className={`flex-1 py-2.5 items-center ${
+							activeTab === "all" ? "border-b-[3px]" : ""
+						}`}
+						style={
+							activeTab === "all"
+								? { borderBottomColor: COLORS.DEEP_BLUE }
+								: undefined
+						}
 						onPress={() => setActiveTab("all")}>
-						<View style={styles.tabInner}>
+						<View className="flex-row gap-x-2.5 items-center">
 							<Text
-								style={[
-									styles.tabText,
-									activeTab === "all" && styles.activeTabText,
-								]}>
+								className={`text-[15px] font-medium ${
+									activeTab === "all" ? "font-bold" : "text-[#555]"
+								}`}
+								style={
+									activeTab === "all" ? { color: COLORS.DEEP_BLUE } : undefined
+								}>
 								All Notes
 							</Text>
 						</View>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={[styles.tab, activeTab === "starred" && styles.activeTab]}
+					</Pressable>
+
+					<Pressable
+						className={`flex-1 py-2.5 items-center ${
+							activeTab === "starred" ? "border-b-[3px]" : ""
+						}`}
+						style={
+							activeTab === "starred"
+								? { borderBottomColor: COLORS.DEEP_BLUE }
+								: undefined
+						}
 						onPress={() => setActiveTab("starred")}>
-						<View style={styles.tabInner}>
+						<View className="flex-row gap-x-2.5 items-center">
 							<Text
-								style={[
-									styles.tabText,
-									activeTab === "starred" && styles.activeTabText,
-								]}>
+								className={`text-[15px] font-medium ${
+									activeTab === "starred" ? "font-bold" : "text-[#555]"
+								}`}
+								style={
+									activeTab === "starred"
+										? { color: COLORS.DEEP_BLUE }
+										: undefined
+								}>
 								Starred
 							</Text>
 						</View>
-					</TouchableOpacity>
+					</Pressable>
 				</View>
 
 				{/* Notes List */}
 				<FlatList
 					data={filteredNotes}
+					className="pb-10"
 					keyExtractor={(item) => item.id.toString()}
-					ItemSeparatorComponent={() => <View style={{ marginVertical: 8 }} />}
+					// ItemSeparatorComponent={() => <View className="my-2" />}
 					showsVerticalScrollIndicator={false}
-					contentContainerStyle={styles.listContent}
 					ListEmptyComponent={
-						<Text style={styles.emptyText}>No notes found</Text>
+						<Text className="text-center mt-10 text-base text-[#777]">
+							No notes found
+						</Text>
 					}
 					renderItem={({ item }) => (
 						<NoteCard
@@ -134,94 +152,3 @@ export default function Notes() {
 		</SafeAreaView>
 	);
 }
-
-const styles = StyleSheet.create({
-	safeArea: {
-		flex: 1,
-		backgroundColor: "white",
-	},
-	addFab: {
-		position: "absolute",
-		bottom: 50,
-		right: 30,
-		zIndex: 999,
-		height: 60,
-		width: 60,
-		alignContent: "center",
-		justifyContent: "center",
-		backgroundColor: "white",
-		borderRadius: 50,
-		padding: 15,
-		shadowColor: "#000",
-		shadowOpacity: 0.15,
-		shadowOffset: { width: 0, height: 2 },
-		shadowRadius: 4,
-		elevation: 2,
-	},
-	container: {
-		flex: 1,
-		paddingHorizontal: 20,
-	},
-	header: {
-		marginBottom: 10,
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-between",
-	},
-	headerText: {
-		fontSize: 25,
-		fontWeight: "bold",
-	},
-	subHeaderText: {
-		fontSize: 16,
-		color: "#555",
-	},
-	searchInput: {
-		padding: 15,
-		paddingLeft: 20,
-		marginVertical: 5,
-		borderWidth: 0.5,
-		borderColor: COLORS.DEEP_BLUE,
-		borderRadius: 50,
-		backgroundColor: "white",
-	},
-	tabs: {
-		flexDirection: "row",
-		borderBottomWidth: 1,
-		borderBottomColor: "#ccc",
-		marginBottom: 10,
-	},
-	tab: {
-		flex: 1,
-		paddingVertical: 10,
-		alignItems: "center",
-	},
-	tabInner: {
-		flexDirection: "row",
-		columnGap: 10,
-		alignItems: "center",
-	},
-	activeTab: {
-		borderBottomWidth: 3,
-		borderBottomColor: COLORS.DEEP_BLUE,
-	},
-	tabText: {
-		fontSize: 15,
-		fontWeight: "500",
-		color: "#555",
-	},
-	activeTabText: {
-		color: COLORS.DEEP_BLUE,
-		fontWeight: "bold",
-	},
-	listContent: {
-		// paddingTop: 20,
-		// paddingBottom: 50,
-	},
-	emptyText: {
-		textAlign: "center",
-		marginTop: 40,
-		fontSize: 16,
-		color: "#777",
-	},
-});

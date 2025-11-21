@@ -1,80 +1,70 @@
 import { COLORS } from "@/constants/Colors";
+import { Feather, MaterialIcons } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
 import React from "react";
-import {
-	Image,
-	Pressable,
-	StyleSheet,
-	Text,
-	TextInput,
-	View,
-} from "react-native";
+import { Image, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-import { Feather, MaterialIcons } from "@expo/vector-icons";
 
 export default function SignupScreen() {
 	const router = useRouter();
 
 	return (
-		<SafeAreaView style={styles.safeArea}>
-			<View
-				style={{ flex: 0.2, justifyContent: "center", alignItems: "center" }}>
+		<SafeAreaView className="flex-1 justify-center items-center px-1 bg-white">
+			<View className="w-full px-5 bg-white">
 				<Image
 					source={require("@/assets/images/app_logo.png")}
-					style={styles.noteLogo}
+					className="h-32 w-full"
 					resizeMode="contain"
 				/>
-			</View>
-			<View style={[styles.card, { display: "flex" }]}>
-				<Image
-					source={require("@/assets/images/app_logo.png")}
-					style={styles.noteLogo}
-					resizeMode="contain"
-				/>
-				<Text style={styles.title}>Create Your Account</Text>
-				<Text style={styles.subTitle}>Create your account to get started</Text>
+
+				<Text className="text-3xl font-bold text-center">
+					Create Your Account
+				</Text>
+
+				<Text className="text-base text-gray-500 text-center mb-6">
+					Create your account to get started
+				</Text>
 
 				{/* Full Name */}
-				<View style={styles.inputWrapper}>
+				<View className="flex-row items-center border border-gray-300 rounded-lg mb-5 px-3">
 					<Feather
 						name="user"
 						size={22}
 						color={COLORS.DEEP_BLUE}
-						style={styles.inputIcon}
+						style={{ marginRight: 10 }}
 					/>
 					<TextInput
-						style={styles.input}
+						className="flex-1 py-3 text-lg"
 						placeholder="Enter full name"
 					/>
 				</View>
 
 				{/* Email */}
-				<View style={styles.inputWrapper}>
+				<View className="flex-row items-center border border-gray-300 rounded-lg mb-5 px-3">
 					<MaterialIcons
 						name="email"
 						size={22}
 						color={COLORS.DEEP_BLUE}
-						style={styles.inputIcon}
+						style={{ marginRight: 10 }}
 					/>
 					<TextInput
-						style={styles.input}
+						className="flex-1 py-3 text-lg"
 						placeholder="Enter email"
 						keyboardType="email-address"
 					/>
 				</View>
 
 				{/* Password */}
-				<View style={styles.inputWrapper}>
+				<View className="flex-row items-center border border-gray-300 rounded-lg mb-5 px-3">
 					<Feather
 						name="lock"
 						size={22}
 						color={COLORS.DEEP_BLUE}
-						style={styles.inputIcon}
+						style={{ marginRight: 10 }}
 					/>
 					<TextInput
-						style={styles.input}
-						secureTextEntry={true}
+						className="flex-1 py-3 text-lg"
+						secureTextEntry
 						placeholder="Enter password"
 						autoCapitalize="none"
 						autoCorrect={false}
@@ -83,16 +73,16 @@ export default function SignupScreen() {
 				</View>
 
 				{/* Confirm Password */}
-				<View style={styles.inputWrapper}>
+				<View className="flex-row items-center border border-gray-300 rounded-lg mb-5 px-3">
 					<Feather
 						name="lock"
 						size={22}
 						color={COLORS.DEEP_BLUE}
-						style={styles.inputIcon}
+						style={{ marginRight: 10 }}
 					/>
 					<TextInput
-						style={styles.input}
-						secureTextEntry={true}
+						className="flex-1 py-3 text-lg"
+						secureTextEntry
 						placeholder="Confirm password"
 						autoCapitalize="none"
 						autoCorrect={false}
@@ -100,131 +90,55 @@ export default function SignupScreen() {
 					/>
 				</View>
 
+				{/* Button */}
 				<Pressable
-					style={[styles.btn, { backgroundColor: COLORS.DEEP_BLUE }]}
+					className="w-full rounded-full border border-gray-300 py-4 items-center"
+					style={{ backgroundColor: COLORS.DEEP_BLUE }}
 					onPress={() => router.push("/notes")}>
-					<Text style={{ color: "white", fontSize: 16 }}>Sign Up</Text>
+					<Text className="text-white text-base">Sign Up</Text>
 				</Pressable>
 
-				<View style={styles.wrapper}>
-					<View style={styles.line} />
-					<Text style={{ fontSize: 14, marginHorizontal: 10, color: "#888" }}>
-						Sign Up With
-					</Text>
-					<View style={styles.line} />
+				{/* Divider */}
+				<View className="flex-row items-center my-4">
+					<View className="flex-1 h-px bg-gray-300 mr-2" />
+					<Text className="text-sm text-gray-500 mx-2">Sign Up With</Text>
+					<View className="flex-1 h-px bg-gray-300 ml-2" />
 				</View>
 
-				<View style={styles.logoContainer}>
-					<View style={styles.logoWrapper}>
+				{/* Social Icons */}
+				<View className="flex-row justify-center mb-6 gap-x-5">
+					<View className="bg-white p-2 rounded-xl shadow-md">
 						<Image
 							source={require("@/assets/images/facebook_logo.png")}
-							style={styles.logo}
+							className="w-10 h-10"
+							resizeMode="contain"
 						/>
 					</View>
-					<View style={styles.logoWrapper}>
+
+					<View className="bg-white p-2 rounded-xl shadow-md">
 						<Image
 							source={require("@/assets/images/google_logo.png")}
-							style={styles.logo}
+							className="w-10 h-10"
+							resizeMode="contain"
 						/>
 					</View>
-					<View style={styles.logoWrapper}>
+
+					<View className="bg-white p-2 rounded-xl shadow-md">
 						<Image
 							source={require("@/assets/images/twitter_logo.png")}
-							style={styles.logo}
+							className="w-10 h-10"
+							resizeMode="contain"
 						/>
 					</View>
 				</View>
 
+				{/* Footer Link */}
 				<Link
 					href={{ pathname: "/login" }}
-					style={{ textAlign: "center", marginBottom: 20 }}>
-					<Text>Already have an account? LogIn</Text>
+					className="text-center mb-6">
+					<Text className="text-blue-900">Already have an account? LogIn</Text>
 				</Link>
 			</View>
 		</SafeAreaView>
 	);
 }
-
-const styles = StyleSheet.create({
-	noteLogo: {
-		height: 120,
-		width: "100%",
-	},
-	safeArea: {
-		flex: 1,
-		justifyContent: "center",
-		alignItems: "center",
-		paddingHorizontal: 2,
-		backgroundColor: "white",
-	},
-	title: {
-		fontSize: 26,
-		fontWeight: "bold",
-		textAlign: "center",
-	},
-	subTitle: {
-		fontSize: 15,
-		textAlign: "center",
-		marginBottom: 25,
-	},
-	line: {
-		flex: 1,
-		height: 1,
-		backgroundColor: "#ccc",
-		marginRight: 10,
-	},
-	wrapper: {
-		flexDirection: "row",
-		alignItems: "center",
-		marginVertical: 15,
-	},
-	card: {
-		width: "100%",
-		paddingHorizontal: 20,
-		backgroundColor: "white",
-	},
-	inputWrapper: {
-		flexDirection: "row",
-		alignItems: "center",
-		borderWidth: 0.3,
-		borderRadius: 10,
-		marginBottom: 18,
-		paddingHorizontal: 10,
-	},
-	inputIcon: {
-		marginRight: 10,
-	},
-	input: {
-		flex: 1,
-		paddingVertical: 18,
-		fontSize: 16,
-	},
-	btn: {
-		borderWidth: 0.5,
-		paddingVertical: 13,
-		alignItems: "center",
-		borderRadius: 30,
-		width: "100%",
-	},
-	logoContainer: {
-		flexDirection: "row",
-		justifyContent: "center",
-		columnGap: 30,
-		marginBottom: 20,
-	},
-	logoWrapper: {
-		backgroundColor: "#fff",
-		padding: 5,
-		borderRadius: 10,
-		elevation: 2,
-		shadowColor: "#000",
-		shadowOffset: { width: 0, height: 2 },
-		shadowOpacity: 0.2,
-		shadowRadius: 4,
-	},
-	logo: {
-		width: 40,
-		height: 40,
-		resizeMode: "contain",
-	},
-});
