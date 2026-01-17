@@ -7,7 +7,7 @@ export const STICKY_COLORS = [
 	"#EF9A9A",
 	"#B0BEC5",
 	"#80CBC4",
-	"#FFF59D",
+	"#f2e257",
 	"#BCAAA4",
 ];
 

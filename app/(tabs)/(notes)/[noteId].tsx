@@ -1,9 +1,8 @@
 import { COLORS } from "@/constants/Colors";
-import notes from "@/db/data.json";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function NoteDetail() {
@@ -11,7 +10,7 @@ export default function NoteDetail() {
 	const router = useRouter();
 
 	const [currentNote, setCurrentNote] = useState(
-		notes.find((note) => note.id.toString() === noteId),
+		notes.find((note) => note.id.toString() === 2),
 	);
 
 	return (
@@ -30,14 +29,26 @@ export default function NoteDetail() {
 
 			{/* Note Content */}
 			<View
-				className="flex-1 p-5 gap-y-[10px]"
+				className="flex-1 py-5 px-3"
 				style={{
 					backgroundColor: currentNote?.bgColor,
 				}}>
-				<Text className="text-[25px] leading-[50px] font-bold">
-					{currentNote?.title}
-				</Text>
-				<Text className="text-[18px] leading-[40px]">{currentNote?.body}</Text>
+				<View className="flex-row items-center mb-5">
+					<Ionicons
+						name="chevron-back"
+						size={25}
+						color={COLORS.DEEP_BLUE}
+					/>
+					<Text className="text-2xl font-semibold">Notes</Text>
+				</View>
+				<ScrollView className="gap-y-[10px] px-3">
+					<Text className="text-[22px] leading-[30px] font-semibold">
+						{currentNote?.title}
+					</Text>
+					<Text className="text-[17px] leading-[25px]">
+						{currentNote?.body}
+					</Text>
+				</ScrollView>
 			</View>
 		</SafeAreaView>
 	);

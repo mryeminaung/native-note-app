@@ -1,24 +1,15 @@
 import NoteCard from "@/components/NoteCard";
 import { COLORS } from "@/constants/Colors";
-import data from "@/db/data.json";
-import { AntDesign, MaterialIcons } from "@expo/vector-icons";
+import { supabase } from "@/libs/supabase";
+import { Note } from "@/types";
+import { AntDesign } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FlatList, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-type NotesProps = {
-	id: number;
-	title: string;
-	body: string;
-	bgColor: string;
-	starred: boolean;
-	priority: string;
-	createdAt: string;
-};
-
 export default function Notes() {
-	const [notes, setNotes] = useState<NotesProps[]>(data);
+	const [notes, setNotes] = useState<Note[] | []>([]);
 	const router = useRouter();
 
 	const [activeTab, setActiveTab] = useState<"all" | "starred">("all");
@@ -40,33 +31,41 @@ export default function Notes() {
 			);
 	}, [notes, activeTab, searchQuery]);
 
-	return (
-		<SafeAreaView className="flex-1 bg-white">
-			{/* Floating Action Button */}
-			<Pressable
-				className="absolute bottom-[50px] right-[30px] z-50 h-[60px] w-[60px] items-center justify-center bg-white rounded-full p-4 shadow-md shadow-black elevation-5"
-				onPress={() => router.push("./create")}>
-				<AntDesign
-					name="plus"
-					size={25}
-					className="text-center"
-					color={COLORS.DEEP_BLUE}
-				/>
-			</Pressable>
+	const getNotes = async () => {
+		const res = await supabase.from("notes").select("*");
+		if (res.data) setNotes(res.data);
+	};
 
+	useEffect(() => {
+		getNotes();
+	}, []);
+
+	return (
+		<SafeAreaView className="flex-1 bg-white pt-3">
 			<View className="flex-1 px-5">
 				{/* Header */}
-				<View className="mb-2.5 flex-row items-center justify-between">
+				<View className="mb-2.5 flex-row items-start justify-between">
 					<View className="gap-y-[7px]">
-						<Text className="text-[25px] font-bold">My Notes</Text>
-						<Text className="text-base text-[#555]">
+						<Text
+							className="text-[25px] font-bold"
+							style={{ color: COLORS.DEEP_BLUE }}>
+							My Notes
+						</Text>
+						<Text className="text-base text-slate-600">
 							Your daily notes that remind you
 						</Text>
 					</View>
-					<MaterialIcons
-						name="sort"
-						size={45}
-					/>
+					{/* Add New Button */}
+					<Pressable
+						className="items-center justify-center bg-white rounded-full p-4 shadow-md shadow-black elevation-5"
+						onPress={() => router.push("./create")}>
+						<AntDesign
+							name="plus"
+							size={25}
+							className="text-center"
+							color={COLORS.DEEP_BLUE}
+						/>
+					</Pressable>
 				</View>
 
 				{/* Search Input */}
@@ -79,10 +78,11 @@ export default function Notes() {
 				/>
 
 				{/* Tabs */}
-				<View className="flex-row border-b border-[#ccc] mb-2.5">
+				<View className="flex-row border-[#ccc] mb-2.5">
+					{/* All Notes Tab */}
 					<Pressable
 						className={`flex-1 py-2.5 items-center ${
-							activeTab === "all" ? "border-b-[3px]" : ""
+							activeTab === "all" ? "border-b-[3px] rounded-md" : ""
 						}`}
 						style={
 							activeTab === "all"
@@ -103,9 +103,10 @@ export default function Notes() {
 						</View>
 					</Pressable>
 
+					{/* Starred Tab */}
 					<Pressable
 						className={`flex-1 py-2.5 items-center ${
-							activeTab === "starred" ? "border-b-[3px]" : ""
+							activeTab === "starred" ? "border-b-[3px] rounded-md" : ""
 						}`}
 						style={
 							activeTab === "starred"
@@ -132,7 +133,7 @@ export default function Notes() {
 				{/* Notes List */}
 				<FlatList
 					data={filteredNotes}
-					className="pb-10"
+					contentContainerStyle={{ paddingBottom: 80 }}
 					keyExtractor={(item) => item.id.toString()}
 					// ItemSeparatorComponent={() => <View className="my-2" />}
 					showsVerticalScrollIndicator={false}

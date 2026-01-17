@@ -1,3 +1,5 @@
+import { formatNoteDate } from "@/libs/utils";
+import { Note } from "@/types";
 import { MaterialIcons } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useRouter } from "expo-router";
@@ -5,15 +7,7 @@ import React from "react";
 import { Pressable, Text, View } from "react-native";
 
 type NoteCardProps = {
-	note: {
-		id: number;
-		title: string;
-		body: string;
-		bgColor: string;
-		starred: boolean;
-		priority: string;
-		createdAt: string;
-	};
+	note: Note;
 	markedAsStar: any;
 };
 
@@ -60,7 +54,7 @@ export default function NoteCard({ note, markedAsStar }: NoteCardProps) {
 					<Text
 						numberOfLines={2}
 						className="text-sm leading-5 mt-[5px] mb-2">
-						{note.body}
+						{note.content}
 					</Text>
 				</View>
 
@@ -71,7 +65,9 @@ export default function NoteCard({ note, markedAsStar }: NoteCardProps) {
 							name="calendar-check-o"
 							size={18}
 						/>
-						<Text className="text-sm text-black">{note.createdAt}</Text>
+						<Text className="text-sm text-black">
+							{formatNoteDate(note.created_at)}
+						</Text>
 					</View>
 
 					<View className="flex-row gap-x-[15px] justify-center items-center">

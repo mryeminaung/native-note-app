@@ -10,7 +10,14 @@ export default function TabLayout() {
 			screenOptions={{
 				headerShown: false,
 				tabBarStyle: {
-					padding: 30,
+					position: "absolute",
+					// bottom: 20,
+					// left: 20,
+					// right: 20,
+					height: 60,
+					// borderRadius: 30,
+					// backgroundColor: "#1e1e1e",
+					// paddingBottom: 0,
 				},
 				tabBarActiveTintColor: COLORS.DEEP_BLUE,
 			}}>
@@ -22,7 +29,7 @@ export default function TabLayout() {
 					tabBarIcon: ({ color }) => (
 						<MaterialIcons
 							name="sticky-note-2"
-							size={24}
+							size={28}
 							color={color}
 						/>
 					),
@@ -36,7 +43,7 @@ export default function TabLayout() {
 					tabBarIcon: ({ color }) => (
 						<FontAwesome
 							name="gear"
-							size={24}
+							size={28}
 							color={color}
 						/>
 					),
