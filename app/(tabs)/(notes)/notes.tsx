@@ -4,18 +4,33 @@ import { supabase } from "@/libs/supabase";
 import { Note } from "@/types";
 import { AntDesign } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { useEffect, useMemo, useState } from "react";
-import { FlatList, Pressable, Text, TextInput, View } from "react-native";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+	FlatList,
+	Pressable,
+	RefreshControl,
+	Text,
+	TextInput,
+	View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Notes() {
 	const [notes, setNotes] = useState<Note[] | []>([]);
-	const router = useRouter();
-
 	const [activeTab, setActiveTab] = useState<"all" | "starred">("all");
 	const [searchQuery, setSearchQuery] = useState("");
+	const [refreshing, setRefreshing] = useState(false);
 
-	const markedAsStar = (id: number) => {
+	const router = useRouter();
+
+	const onRefresh = useCallback(() => {
+		setRefreshing(true);
+		setTimeout(() => {
+			setRefreshing(false);
+		}, 3000);
+	}, []);
+
+	const markedAsStar = (id: string) => {
 		setNotes((prevNotes) =>
 			prevNotes.map((note) =>
 				note.id === id ? { ...note, starred: !note.starred } : note,
@@ -133,6 +148,12 @@ export default function Notes() {
 				{/* Notes List */}
 				<FlatList
 					data={filteredNotes}
+					refreshControl={
+						<RefreshControl
+							refreshing={refreshing}
+							onRefresh={onRefresh}
+						/>
+					}
 					contentContainerStyle={{ paddingBottom: 80 }}
 					keyExtractor={(item) => item.id.toString()}
 					// ItemSeparatorComponent={() => <View className="my-2" />}

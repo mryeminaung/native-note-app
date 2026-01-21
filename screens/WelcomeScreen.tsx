@@ -7,7 +7,7 @@ export default function WelcomeScreen() {
 	const router = useRouter();
 
 	return (
-		<View className="flex-1 justify-center items-center">
+		<View className="flex-1 justify-center items-center bg-white">
 			<Text
 				className="text-[35px] font-bold mb-2.5"
 				style={{ color: COLORS.DEEP_BLUE }}>

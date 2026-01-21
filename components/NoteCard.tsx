@@ -1,10 +1,11 @@
+import { supabase } from "@/libs/supabase";
 import { formatNoteDate } from "@/libs/utils";
 import { Note } from "@/types";
 import { MaterialIcons } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useRouter } from "expo-router";
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Alert, Pressable, Text, View } from "react-native";
 
 type NoteCardProps = {
 	note: Note;
@@ -14,6 +15,22 @@ type NoteCardProps = {
 export default function NoteCard({ note, markedAsStar }: NoteCardProps) {
 	const router = useRouter();
 
+	const handleNoteDelete = () => {
+		Alert.alert("Confirm", "Are you sure you want to delete?", [
+			{
+				text: "No",
+				style: "cancel",
+			},
+			{
+				text: "Yes",
+				style: "destructive",
+				onPress: async () => {
+					await supabase.from("notes").delete().eq("id", note.id);
+				},
+			},
+		]);
+	};
+
 	return (
 		<View
 			className="rounded-xl p-5 w-full mb-5"
@@ -22,7 +39,7 @@ export default function NoteCard({ note, markedAsStar }: NoteCardProps) {
 				onPress={() =>
 					router.push({
 						pathname: "./[noteId]",
-						params: { noteId: note.id.toString() },
+						params: { noteId: note.id },
 					})
 				}>
 				<View className="gap-y-3">
@@ -76,6 +93,7 @@ export default function NoteCard({ note, markedAsStar }: NoteCardProps) {
 							size={18}
 						/>
 						<FontAwesome
+							onPress={() => handleNoteDelete()}
 							name="trash"
 							size={18}
 						/>

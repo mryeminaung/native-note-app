@@ -12,29 +12,34 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 type EditNoteProps = {
-	id?: number;
 	title: string;
-	body: string;
+	content: string;
 	bgColor: string;
 	starred: false;
 };
 
 export default function EditNote() {
-	const [newNote, setNewNote] = useState<EditNoteProps | null>({
+	const [editNote, setEditNote] = useState<EditNoteProps | null>({
 		title: "",
-		body: "",
+		content: "",
 		bgColor: "",
 		starred: false,
 	});
 
 	const router = useRouter();
 
+	const handleNoteChange = (key: string, value: string) => {
+		setEditNote((prevNote) =>
+			prevNote ? { ...prevNote, [key]: value } : null,
+		);
+	};
+
 	return (
-		<SafeAreaView className="flex-1">
+		<SafeAreaView className="flex-1 bg-white">
 			<View
 				className="flex-1 flex-col"
 				style={{
-					backgroundColor: newNote?.bgColor ? newNote.bgColor : "white",
+					backgroundColor: editNote?.bgColor ? editNote.bgColor : "white",
 				}}>
 				{/* Save FAB */}
 				<Pressable
@@ -47,6 +52,7 @@ export default function EditNote() {
 						color={COLORS.DEEP_BLUE}
 					/>
 				</Pressable>
+
 				{/* Color Picker Section */}
 				<View className="my-5 flex-row justify-evenly">
 					<ScrollView
@@ -56,11 +62,7 @@ export default function EditNote() {
 						{STICKY_COLORS.map((color) => (
 							<TouchableWithoutFeedback
 								key={color}
-								onPress={() =>
-									setNewNote((preNote) =>
-										preNote ? { ...preNote, bgColor: color } : null,
-									)
-								}>
+								onPress={() => handleNoteChange("bgColor", color)}>
 								<View
 									className="w-[50px] h-[50px] rounded-[10px] mr-2.5 border border-[#ccc]"
 									style={{ backgroundColor: color }}
@@ -74,22 +76,18 @@ export default function EditNote() {
 					<TextInput
 						multiline
 						className="rounded-full text-[23px]"
-						style={{ backgroundColor: newNote?.bgColor }}
+						style={{ backgroundColor: editNote?.bgColor }}
 						placeholder="Title"
-						value={newNote?.title}
-						onChangeText={(text) =>
-							setNewNote((prev) => (prev ? { ...prev, title: text } : null))
-						}
+						value={editNote?.title}
+						onChangeText={(text) => handleNoteChange("title", text)}
 					/>
 					<TextInput
 						className="text-base"
 						placeholder="Note something down"
 						multiline
 						textAlignVertical="top"
-						value={newNote?.body}
-						onChangeText={(text) =>
-							setNewNote((prev) => (prev ? { ...prev, body: text } : null))
-						}
+						value={editNote?.content}
+						onChangeText={(text) => handleNoteChange("content", text)}
 					/>
 				</View>
 			</View>

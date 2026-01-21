@@ -79,7 +79,7 @@ export default function LoginScreen() {
 
 				{/* Login Button */}
 				<Pressable
-					className="w-full rounded-xl border border-gray-300 py-3 items-center"
+					className="w-full rounded-xl border border-gray-300 py-4 items-center"
 					style={{ backgroundColor: COLORS.DEEP_BLUE }}
 					onPress={handleLogin}>
 					<Text className="text-white text-base font-semibold">Login</Text>
